@@ -73,7 +73,7 @@ defmodule LiveDebuggerWeb.Live.Traces.Components.Trace do
         </div>
       </:label>
       <div class="relative">
-        <div class="absolute right-0 top-0 z-10">
+        <div :if={@render_body?} class="absolute right-0 top-0 z-10">
           <.fullscreen_button
             id={"trace-fullscreen-#{@id}"}
             class="m-2"
@@ -81,14 +81,11 @@ defmodule LiveDebuggerWeb.Live.Traces.Components.Trace do
             phx-value-data={@trace.id}
           />
         </div>
-        <div class="flex flex-col gap-4 overflow-x-auto max-w-full max-h-[30vh] overflow-y-auto p-4">
-          <%= if @render_body? do %>
-            <Components.trace_body id={@id} trace_args={@trace.args} trace={@trace} />
-          <% else %>
-            <div class="w-full flex items-center justify-center">
-              <.spinner size="sm" />
-            </div>
-          <% end %>
+        <div
+          :if={@render_body?}
+          class="flex flex-col gap-4 overflow-x-auto max-w-full max-h-[30vh] overflow-y-auto p-4"
+        >
+          <Components.trace_body id={@id} trace_args={@trace.args} trace={@trace} />
         </div>
       </div>
     </.collapsible>
